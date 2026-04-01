@@ -1,7 +1,7 @@
 <?php
 include("db.php");
 
-$sql = "SELCET * FROM locations";
+$sql = "SELECT * FROM location";
 $result = mysqli_query($conn, $sql);
 
 $locations = [];
