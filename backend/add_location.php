@@ -16,6 +16,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $ticket_price = $_POST['ticket_price'];
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
+
+    if ($latitude == '') $latitude = 0;
+    if ($longitude == '') $longitude = 0;
     
     $sql = "INSERT INTO location
     (name, description, district, category, open_time, close_time, ticket_price, latitude, longitude)

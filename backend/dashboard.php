@@ -1,12 +1,12 @@
 <?php
 session_start();
 if (!isset($_SESSION['user'])){
-    header("Location: login.html");
+    header("Location: frontend/login.html");
     exit();
 }
 //pass to html
 $username = $_SESSION['user'];
-$role = $_SESSION['role'];
+$role = isset($_SESSION['role']) ? $_SESSION['role'] : 'user';
 
-include("dashboard.html");
+include("dashboard_view.php");
 ?>
