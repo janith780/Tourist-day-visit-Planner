@@ -26,7 +26,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     ('$name','$description','$district','$category','$open_time','$close_time','$ticket_price','$latitude','$longitude')";
     
     if(mysqli_query($conn, $sql)){
-        echo "Location added successfully";
+        header("Location: dashboard.php?msg=added");
+        exit();
     }else {
         echo "Error: ". mysqli_error($conn);
     }

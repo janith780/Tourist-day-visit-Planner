@@ -1,3 +1,9 @@
+<?php if (isset($_GET['msg'])) { ?>
+    <div style="background: lightgreen; padding: 10px;">
+        Location added successfully!
+    </div>
+<?php } ?>
+
 <h2>Welcome <?php echo $username; ?></h2>
 
 <?php if ($role == 'admin') { ?>
