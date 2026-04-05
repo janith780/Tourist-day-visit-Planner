@@ -11,10 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = mysqli_query($conn, $sql);
     $user = mysqli_fetch_assoc($result);
 
-   
+    //  FIXED condition
     if ($user && password_verify($password, $user['password'])) {
 
-        $_SESSION['user'] = $user['name'];
+        $_SESSION['name'] = $user['name'];
+        $_SESSION['email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
 
         header("Location: dashboard.php");
@@ -24,4 +25,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Invalid email or password!";
     }
 }
+?>
 ?>
