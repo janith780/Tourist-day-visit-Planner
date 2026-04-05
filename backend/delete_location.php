@@ -15,3 +15,4 @@ if(mysqli_query($conn, $sql)) {
 }else{
     echo "Error: " . mysqli_error($conn);
 }
+?>
