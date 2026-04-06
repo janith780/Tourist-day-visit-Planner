@@ -7,12 +7,19 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
     exit();
 }
 
-$id = $_GET['id'];
-$sql = "DELETE FROM location WHERE id='$id'";
+// ✅ Check if id is set
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
-if(mysqli_query($conn, $sql)) {
-    echo "Deleted successfully";
-}else{
-    echo "Error: " . mysqli_error($conn);
+    $sql = "DELETE FROM location WHERE id='$id'";
+
+    if(mysqli_query($conn, $sql)) {
+        echo "Deleted successfully";
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+
+} else {
+    echo "Invalid request: ID not found";
 }
 ?>

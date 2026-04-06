@@ -1,3 +1,17 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['name'])) {
+    header("Location: login.html");
+    exit();
+}
+
+$username = $_SESSION['name'];
+$role = isset($_SESSION['role']) ? $_SESSION['role'] : 'user';
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
