@@ -10,6 +10,9 @@ if (!isset($_SESSION['name'])) {
 
 $username = $_SESSION['name'];
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'user';
+
+$homeLat = 6.783542984247348;
+$homeLon = 79.89335765231485;
 ?>
 
 <!DOCTYPE html>
@@ -134,10 +137,70 @@ function showTab(tab) {
 </script>
 
 <?php } else { ?>
-    <p>User Dashboard</p>
+    <h3>User Dashboard</h3>
+    <div>
+        <?php while($row = mysqli_fetch_assoc($result)) { ?>
+        <div class="card">
+            <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
+            <h3>
+                <a href="?location=<?php echo $row['id']; ?>"><?php echo $row['name']; ?></a>
+            </h3>
+            <p><?php echo $row['district']; ?></p>
+        </div>
+        <?php } ?>
+    </div>
+
+    <?php
+    // Show full location details if user clicks on a name
+    if (isset($_GET['location'])) {
+        $loc_id = $_GET['location'];
+        $res = mysqli_query($conn, "SELECT * FROM location WHERE id=$loc_id");
+        $loc = mysqli_fetch_assoc($res);
+        ?>
+        <hr>
+        <h3>Details: <?php echo $loc['name']; ?></h3>
+        <img src="../images/<?php echo $loc['image']; ?>" width="300">
+        <p><?php echo $loc['description']; ?></p>
+        <p>District: <?php echo $loc['district']; ?></p>
+        <p>Category: <?php echo $loc['category']; ?></p>
+        <p>Open: <?php echo $loc['open_time']; ?> | Close: <?php echo $loc['close_time']; ?></p>
+        <p>Ticket: Rs. <?php echo $loc['ticket_price']; ?></p>
+
+        <button onclick="getLocation(<?php echo $loc['latitude']; ?>, <?php echo $loc['longitude']; ?>)">Show Distance</button>
+        <p id="distance"></p>
+
+        <a target="_blank" href="https://www.google.com/maps?q=<?php echo $loc['latitude']; ?>,<?php echo $loc['longitude']; ?>">
+            <button>Navigate</button>
+        </a>
+
+         <script>
+        function getLocation(lat, lon) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position){
+                    let userLat = position.coords.latitude;
+                    let userLon = position.coords.longitude;
+                    let distance = calculateDistance(userLat,userLon,lat,lon);
+                    document.getElementById("distance").innerHTML = "Distance: " + distance.toFixed(2) + " km";
+                });
+            } else {
+                alert("Geolocation not supported");
+            }
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            let R = 6371; // km
+            let dLat = (lat2-lat1) * Math.PI/180;
+            let dLon = (lon2-lon1) * Math.PI/180;
+            let a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
+            let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+        </script>
+    <?php } ?>
+
 <?php } ?>
 
-<a href="logout.php">Logout</a>
+<br><a href="logout.php">Logout</a>
 
 </body>
 </html>
