@@ -11,24 +11,48 @@ if (!isset($_SESSION['name'])) {
 $username = $_SESSION['name'];
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'user';
 
-$homeLat = 6.783542984247348;
-$homeLon = 79.89335765231485;
+include("../backend/db.php");
+
+// Admin data
+if ($role == 'admin') {
+    $result = mysqli_query($conn, "SELECT * FROM location");
+    $result2 = mysqli_query($conn, "SELECT * FROM location");
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Dashboard</title>
+
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 200px;
+            margin: 10px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        button {
+            margin: 5px;
+        }
+    </style>
 </head>
+
 <body>
 
-<?php
-// Debug session variables (optional)
-echo "<p>Logged in as: $username | Role: $role</p>";
-?>
+<p>Logged in as: <?php echo $username; ?> | Role: <?php echo $role; ?></p>
 
 <?php if (isset($_GET['msg'])) { ?>
-    <div style="background: lightgreen; padding: 10px; margin-bottom:10px;">
+    <div style="background: lightgreen; padding: 10px;">
         <?php
         if($_GET['msg'] == 'added') echo "Location added successfully";
         if($_GET['msg'] == 'deleted') echo "Location deleted successfully!";
@@ -40,18 +64,20 @@ echo "<p>Logged in as: $username | Role: $role</p>";
 <h2>Welcome <?php echo $username; ?></h2>
 
 <?php if ($role == 'admin') { ?>
-    <h3>Admin Panel</h3>
 
-    <button onclick="showTab('add')">Add location</button>
-    <button onclick="showTab('update')">Update location</button>
-    <button onclick="showTab('delete')">Delete location</button>
+<!-- ================= ADMIN PANEL ================= -->
+
+<h3>Admin Panel</h3>
+
+<button onclick="showTab('add')">Add</button>
+<button onclick="showTab('update')">Update</button>
+<button onclick="showTab('delete')">Delete</button>
 
 <hr>
 
 <!-- ADD -->
 <div id="add" style="display:none;">
-    <h3>Add Location</h3>
-    <form action="add_location.php" method="POST">
+    <form action="../backend/add_location.php" method="POST">
         Name: <input type="text" name="name"><br>
         Description: <input type="text" name="description"><br>
         District: <input type="text" name="district"><br>
@@ -61,70 +87,56 @@ echo "<p>Logged in as: $username | Role: $role</p>";
         Ticket Price: <input type="number" name="ticket_price"><br>
         Latitude: <input type="text" name="latitude"><br>
         Longitude: <input type="text" name="longitude"><br>
-        <button type="submit">Add Location</button>
+        Image: <input type="text" name="image"><br>
+        <button type="submit">Add</button>
     </form>
 </div>
 
 <!-- UPDATE -->
 <div id="update" style="display:none;">
-    <h3>Update Location</h3>
+<table border="1">
+<tr>
+<th>Name</th><th>Description</th><th>District</th><th>Category</th>
+<th>Open</th><th>Close</th><th>Price</th><th>Lat</th><th>Lon</th><th>Action</th>
+</tr>
 
-    <table border="1" cellpadding="10">
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>District</th>
-            <th>Category</th>
-            <th>Open Time</th>
-            <th>Close Time</th>
-            <th>Ticket Price</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Action</th>
-        </tr>
-
-        <?php while($row = mysqli_fetch_assoc($result)){ ?>
-        <tr>
-            <form action="update_location.php" method="POST">
-                <td><input type="text" name="name" value="<?php echo $row['name']; ?>"></td>
-                <td><input type="text" name="description" value="<?php echo $row['description']; ?>"></td>
-                <td><input type="text" name="district" value="<?php echo $row['district']; ?>"></td>
-                <td><input type="text" name="category" value="<?php echo $row['category']; ?>"></td>
-                <td><input type="time" name="open_time" value="<?php echo $row['open_time']; ?>"></td>
-                <td><input type="time" name="close_time" value="<?php echo $row['close_time']; ?>"></td>
-                <td><input type="number" name="ticket_price" value="<?php echo $row['ticket_price']; ?>"></td>
-                <td><input type="text" name="latitude" value="<?php echo $row['latitude']; ?>"></td>
-                <td><input type="text" name="longitude" value="<?php echo $row['longitude']; ?>"></td>
-                <td>
-                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                    <button type="submit">Update</button>
-                </td>
-            </form>
-        </tr>
-        <?php } ?>
-    </table>
+<?php while($row = mysqli_fetch_assoc($result)) { ?>
+<tr>
+<form action="../backend/update_location.php" method="POST">
+<td><input name="name" value="<?php echo $row['name']; ?>"></td>
+<td><input name="description" value="<?php echo $row['description']; ?>"></td>
+<td><input name="district" value="<?php echo $row['district']; ?>"></td>
+<td><input name="category" value="<?php echo $row['category']; ?>"></td>
+<td><input type="time" name="open_time" value="<?php echo $row['open_time']; ?>"></td>
+<td><input type="time" name="close_time" value="<?php echo $row['close_time']; ?>"></td>
+<td><input name="ticket_price" value="<?php echo $row['ticket_price']; ?>"></td>
+<td><input name="latitude" value="<?php echo $row['latitude']; ?>"></td>
+<td><input name="longitude" value="<?php echo $row['longitude']; ?>"></td>
+<td>
+<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+<button type="submit">Update</button>
+</td>
+</form>
+</tr>
+<?php } ?>
+</table>
 </div>
 
 <!-- DELETE -->
 <div id="delete" style="display:none;">
-    <h3>Delete Location</h3>
+<table border="1">
+<tr><th>Name</th><th>Action</th></tr>
 
-    <table border="1" cellpadding="10">
-        <tr>
-            <th>Name</th>
-            <th>Action</th>
-        </tr>
+<?php while($row = mysqli_fetch_assoc($result2)) { ?>
+<tr>
+<td><?php echo $row['name']; ?></td>
+<td>
+<a href="../backend/delete_location.php?id=<?php echo $row['id']; ?>">Delete</a>
+</td>
+</tr>
+<?php } ?>
 
-        <?php while($row = mysqli_fetch_assoc($result2)) { ?>
-        <tr>
-            <td><?php echo $row['name']; ?></td>
-            <td>
-                <a href="delete_location.php?id=<?php echo $row['id']; ?>" 
-                onclick="return confirm('Are you sure?')">Delete</a>
-            </td>
-        </tr>
-        <?php } ?>
-    </table>
+</table>
 </div>
 
 <script>
@@ -137,70 +149,93 @@ function showTab(tab) {
 </script>
 
 <?php } else { ?>
-    <h3>User Dashboard</h3>
-    <div>
-        <?php while($row = mysqli_fetch_assoc($result)) { ?>
-        <div class="card">
-            <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
-            <h3>
-                <a href="?location=<?php echo $row['id']; ?>"><?php echo $row['name']; ?></a>
-            </h3>
-            <p><?php echo $row['district']; ?></p>
-        </div>
-        <?php } ?>
+
+<!-- ================= USER DASHBOARD ================= -->
+
+<h3>User Dashboard</h3>
+
+<!-- CATEGORY FILTER -->
+<form method="GET">
+    <button name="category" value="Beach">Beach</button>
+    <button name="category" value="Historical">Historical</button>
+    <button name="category" value="Wildlife">Wildlife</button>
+    <button name="category" value="Religious">Religious</button>
+    <button type="submit">All</button>
+</form>
+
+<br>
+
+<?php
+// FILTER QUERY
+if (isset($_GET['category']) && $_GET['category'] != "") {
+    $category = $_GET['category'];
+    $result = mysqli_query($conn, "SELECT * FROM location WHERE category='$category'");
+} else {
+    $result = mysqli_query($conn, "SELECT * FROM location");
+}
+?>
+
+<!-- LOCATION CARDS -->
+<div>
+<?php while($row = mysqli_fetch_assoc($result)) { ?>
+    <div class="card">
+        <img src="../images/<?php echo $row['image']; ?>">
+        <h3>
+            <a href="?category=<?php echo isset($_GET['category']) ? $_GET['category'] : ''; ?>&location=<?php echo $row['id']; ?>">
+                <?php echo $row['name']; ?>
+            </a>
+        </h3>
+        <p><?php echo $row['district']; ?></p>
     </div>
+<?php } ?>
+</div>
 
-    <?php
-    // Show full location details if user clicks on a name
-    if (isset($_GET['location'])) {
-        $loc_id = $_GET['location'];
-        $res = mysqli_query($conn, "SELECT * FROM location WHERE id=$loc_id");
-        $loc = mysqli_fetch_assoc($res);
-        ?>
-        <hr>
-        <h3>Details: <?php echo $loc['name']; ?></h3>
-        <img src="../images/<?php echo $loc['image']; ?>" width="300">
-        <p><?php echo $loc['description']; ?></p>
-        <p>District: <?php echo $loc['district']; ?></p>
-        <p>Category: <?php echo $loc['category']; ?></p>
-        <p>Open: <?php echo $loc['open_time']; ?> | Close: <?php echo $loc['close_time']; ?></p>
-        <p>Ticket: Rs. <?php echo $loc['ticket_price']; ?></p>
+<?php
+// LOCATION DETAILS
+if (isset($_GET['location'])) {
+    $id = $_GET['location'];
+    $res = mysqli_query($conn, "SELECT * FROM location WHERE id=$id");
+    $loc = mysqli_fetch_assoc($res);
+?>
 
-        <button onclick="getLocation(<?php echo $loc['latitude']; ?>, <?php echo $loc['longitude']; ?>)">Show Distance</button>
-        <p id="distance"></p>
+<hr>
 
-        <a target="_blank" href="https://www.google.com/maps?q=<?php echo $loc['latitude']; ?>,<?php echo $loc['longitude']; ?>">
-            <button>Navigate</button>
-        </a>
+<h3><?php echo $loc['name']; ?></h3>
+<img src="../images/<?php echo $loc['image']; ?>" width="300">
+<p><?php echo $loc['description']; ?></p>
+<p>District: <?php echo $loc['district']; ?></p>
+<p>Category: <?php echo $loc['category']; ?></p>
 
-         <script>
-        function getLocation(lat, lon) {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position){
-                    let userLat = position.coords.latitude;
-                    let userLon = position.coords.longitude;
-                    let distance = calculateDistance(userLat,userLon,lat,lon);
-                    document.getElementById("distance").innerHTML = "Distance: " + distance.toFixed(2) + " km";
-                });
-            } else {
-                alert("Geolocation not supported");
-            }
-        }
+<button onclick="getLocation(<?php echo $loc['latitude']; ?>, <?php echo $loc['longitude']; ?>)">Show Distance</button>
+<p id="distance"></p>
 
-        function calculateDistance(lat1, lon1, lat2, lon2) {
-            let R = 6371; // km
-            let dLat = (lat2-lat1) * Math.PI/180;
-            let dLon = (lon2-lon1) * Math.PI/180;
-            let a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
-            let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-        </script>
-    <?php } ?>
+<a target="_blank" href="https://www.google.com/maps?q=<?php echo $loc['latitude']; ?>,<?php echo $loc['longitude']; ?>">
+    <button>Navigate</button>
+</a>
+
+<script>
+function getLocation(lat, lon) {
+    navigator.geolocation.getCurrentPosition(function(pos){
+        let d = calc(pos.coords.latitude, pos.coords.longitude, lat, lon);
+        document.getElementById("distance").innerHTML = d.toFixed(2) + " km";
+    });
+}
+
+function calc(a,b,c,d){
+    let R=6371;
+    let x=(c-a)*Math.PI/180;
+    let y=(d-b)*Math.PI/180;
+    let z=Math.sin(x/2)**2 + Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)**2;
+    return R * (2*Math.atan2(Math.sqrt(z),Math.sqrt(1-z)));
+}
+</script>
 
 <?php } ?>
 
-<br><a href="logout.php">Logout</a>
+<?php } ?>
+
+<br><br>
+<a href="logout.php">Logout</a>
 
 </body>
 </html>
