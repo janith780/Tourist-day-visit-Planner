@@ -3,10 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tourist Day Visit Planner</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI",sans-serif;
+        }
+
+        body{
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 50px;
+        }
+
+        .navbar h1{
+            font-size: 24px;
+        }
+
+        .navbar a{
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        .navbar a:hover{
+            text-decoration: underline;
+        }
+
+        .hero{
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center ;
+            text-align: center;
+        }
+
+        .hero h2{
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .buttons a {
+            padding: 12px 25px;
+            margin: 10px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-btn{
+            background: #ff7eb3;
+            color: white;
+        }
+
+        .register-btn{
+            background: white;
+            color: black;
+        }
+
+        .buttons a:hover{
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
-    //Navbar
+    <!-- Navbar -->
     <div class="navbar">
         <h1>Tourist Day Visit Planner</h1>
         <div>
@@ -15,7 +94,7 @@
         </div>
     </div>
 
-    //hero
+    <!-- Hero -->
     <div class="hero">
         <div>
             <h2>Plan Your Perfect Day 🌍</h2>
