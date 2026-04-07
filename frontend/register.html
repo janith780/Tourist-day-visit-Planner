@@ -1,80 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register tab</title>
+<meta charset="UTF-8">
+<title>Register</title>
 
-    <style>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
 body {
-    font-family: Arial;
-    background: linear-gradient(to right, #43e97b, #38f9d7);
     height: 100vh;
+    background: linear-gradient(135deg, #36d1dc, #5b86e5);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.container {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    width: 320px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+.card {
+    width: 350px;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    color: white;
 }
 
-h2 {
+.card h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-input {
+.input-box {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.input-box input {
     width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 12px;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.3);
+    color: white;
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #eee;
+    transition: 0.3s;
+}
+
+.input-box input:focus + label,
+.input-box input:valid + label {
+    top: -8px;
+    font-size: 12px;
 }
 
 button {
     width: 100%;
-    padding: 10px;
-    background: #43e97b;
-    color: white;
+    padding: 12px;
+    border-radius: 8px;
     border: none;
-    border-radius: 5px;
+    background: white;
+    color: #333;
+    font-weight: bold;
     cursor: pointer;
 }
 
 button:hover {
-    background: #28a745;
+    background: #ddd;
 }
 
-.link {
+.footer {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 15px;
+}
+
+.footer a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
 }
 </style>
 
 </head>
 <body>
-    <h2></h2>
+
+<div class="card">
+    <h2>Create Account ✨</h2>
 
     <form action="../backend/register.php" method="POST">
-        
-        Name: <input type="text" name="name" required><br><br>
-        Email: <input type="email" name="email" required><br><br>
-        Password: <input type="password" name="password" required><br><br>
+
+        <div class="input-box">
+            <input type="text" name="name" required>
+            <label>Full Name</label>
+        </div>
+
+        <div class="input-box">
+            <input type="email" name="email" required>
+            <label>Email</label>
+        </div>
+
+        <div class="input-box">
+            <input type="password" name="password" required>
+            <label>Password</label>
+        </div>
 
         <button type="submit" name="register">Register</button>
 
-        <p style="text-align:center; margin-top:10px;">
+        <div class="footer">
             Already have an account? <a href="login.html">Login</a>
-        </p>
+        </div>
+
     </form>
+</div>
 
-    <br>
-
-    
 </body>
 </html>
