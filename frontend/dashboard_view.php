@@ -77,7 +77,7 @@ if ($role == 'admin') {
 
 <!-- ADD -->
 <div id="add" style="display:none;">
-    <form action="../backend/add_location.php" method="POST">
+    <form action="../backend/add_location.php" method="POST" enctype="multipart/form-data">
         Name: <input type="text" name="name"><br>
         Description: <input type="text" name="description"><br>
         District: <input type="text" name="district"><br>
@@ -87,7 +87,11 @@ if ($role == 'admin') {
         Ticket Price: <input type="number" name="ticket_price"><br>
         Latitude: <input type="text" name="latitude"><br>
         Longitude: <input type="text" name="longitude"><br>
-        Image: <input type="text" name="image"><br>
+         <!-- Main image -->
+        Image: <input type="file" name="image"><br>
+
+        <!-- Multiple images -->
+        Gallery Images: <input type="file" name="images[]" multiple><br>
         <button type="submit">Add</button>
     </form>
 </div>
@@ -179,7 +183,7 @@ if (isset($_GET['category']) && $_GET['category'] != "") {
 <div>
 <?php while($row = mysqli_fetch_assoc($result)) { ?>
     <div class="card">
-        <img src="../images/panadura beach.jpg<?php echo $row['image']; ?>">
+        <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
         <h3>
             <a href="?category=<?php echo isset($_GET['category']) ? $_GET['category'] : ''; ?>&location=<?php echo $row['id']; ?>">
                 <?php echo $row['name']; ?>
@@ -201,7 +205,13 @@ if (isset($_GET['location'])) {
 <hr>
 
 <h3><?php echo $loc['name']; ?></h3>
-<img src="../images/panadura beach.jpg<?php echo $loc['image']; ?>" width="300">
+<?php
+$imgQuery = mysqli_query($conn, "SELECT * FROM location_images WHERE location_id = $id");
+
+while($img = mysqli_fetch_assoc($imgQuery)){
+?>
+    <img src="../images/<?php echo $img['image']; ?>" width="200">
+<?php } ?>
 <p><?php echo $loc['description']; ?></p>
 <p>District: <?php echo $loc['district']; ?></p>
 <p>Category: <?php echo $loc['category']; ?></p>
