@@ -179,7 +179,7 @@ if (isset($_GET['category']) && $_GET['category'] != "") {
 <div>
 <?php while($row = mysqli_fetch_assoc($result)) { ?>
     <div class="card">
-        <img src="../images/<?php echo $row['image']; ?>">
+        <img src="../images/panadura beach.jpg<?php echo $row['image']; ?>">
         <h3>
             <a href="?category=<?php echo isset($_GET['category']) ? $_GET['category'] : ''; ?>&location=<?php echo $row['id']; ?>">
                 <?php echo $row['name']; ?>
@@ -201,7 +201,7 @@ if (isset($_GET['location'])) {
 <hr>
 
 <h3><?php echo $loc['name']; ?></h3>
-<img src="../images/<?php echo $loc['image']; ?>" width="300">
+<img src="../images/panadura beach.jpg<?php echo $loc['image']; ?>" width="300">
 <p><?php echo $loc['description']; ?></p>
 <p>District: <?php echo $loc['district']; ?></p>
 <p>Category: <?php echo $loc['category']; ?></p>
