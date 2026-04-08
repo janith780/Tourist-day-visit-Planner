@@ -22,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
 
     } else {
-        echo "Invalid email or password!";
+         header("Location: ../frontend/login.html?error=1");
+        exit();
     }
 }
 ?>
