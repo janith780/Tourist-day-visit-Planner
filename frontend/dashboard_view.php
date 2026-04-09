@@ -21,156 +21,443 @@ if ($role == 'admin') {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dashboard</title>
+<meta charset="UTF-8">
+<title>Dashboard</title>
 
-    <style>
-        .card {
-            border: 1px solid #ccc;
-            padding: 10px;
-            width: 200px;
-            margin: 10px;
-            display: inline-block;
-            vertical-align: top;
-        }
+<style>
+/* ===== GLOBAL STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
 
-        .card img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-        }
+body {
+    background: #f0f4f8;
+    padding: 0;
+    margin: 0;
+}
 
-        button {
-            margin: 5px;
-        }
-    </style>
+form label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+}
+
+
+/* ===== TOP NAVBAR ===== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1e293b;
+    padding: 12px 20px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar .logo {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.navbar .user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar .user-info span {
+    font-size: 16px;
+}
+
+.navbar .logout-btn {
+    background: #ef4444;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.navbar .logout-btn:hover {
+    background: #b91c1c;
+}
+
+/* ===== DASHBOARD TITLE ===== */
+h2 {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 28px;
+    color: #1e293b;
+}
+
+/* ===== CATEGORY BAR FOR USER ===== */
+.category-bar {
+    display: flex;
+    gap: 10px;
+    margin: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.category-bar a {
+    padding: 10px 18px;
+    background: #e2e8f0;
+    color: #1e293b;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: 0.3s;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.category-bar a:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* ===== CARDS FOR USER ===== */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.card {
+    width: 240px;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.card h3 {
+    margin: 10px;
+    font-size: 18px;
+}
+
+.card h3 a {
+    text-decoration: none;
+    color: #1e293b;
+    transition: 0.3s;
+}
+
+.card h3 a:hover {
+    color: #3b82f6;
+}
+
+.card p {
+    margin: 0 10px 10px 10px;
+    color: #334155;
+}
+
+/* ===== ADMIN PANEL STYLING ===== */
+.admin-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* ADD FORM CARD */
+.add-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.add-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.add-card h3 {
+    margin-bottom: 15px;
+    color: #1e293b;
+    text-align: center;
+}
+
+.add-card form input, .add-card form select, .add-card form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 15px;
+}
+
+.add-card form button {
+    width: 100%;
+    padding: 10px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-card form button:hover {
+    background: #2563eb;
+}
+
+/* ADMIN TABLE STYLING */
+.admin-table-container { /* NEW: Wrap tables to center */
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    margin: 0 auto; /* CENTER TABLE */
+}
+
+.admin-table th, .admin-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.admin-table th {
+    background: #1e293b;
+    color: white;
+    font-weight: 600;
+}
+
+.admin-table tr:nth-child(even) {
+    background: #f1f5f9;
+}
+
+.admin-table tr:hover {
+    background: #e0f2fe;
+    transform: scale(1.01);
+    transition: 0.3s;
+}
+
+.admin-table button {
+    padding: 6px 12px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.admin-table button:hover {
+    background: #2563eb;
+}
+
+.admin-table a {
+    color: #ef4444;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.admin-table a:hover {
+    color: #b91c1c;
+}
+
+/* ===== TABS ===== */
+.nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    background: #e2e8f0;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    background: #3b82f6;
+    color: white;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-tabs {
+        justify-content: flex-start;
+    }
+    .category-bar {
+        gap: 5px;
+        margin: 10px;
+    }
+}
+</style>
 </head>
-
 <body>
 
-<p>Logged in as: <?php echo $username; ?> | Role: <?php echo $role; ?></p>
-
-<?php if (isset($_GET['msg'])) { ?>
-    <div style="background: lightgreen; padding: 10px;">
-        <?php
-        if($_GET['msg'] == 'added') echo "Location added successfully";
-        if($_GET['msg'] == 'deleted') echo "Location deleted successfully!";
-        if($_GET['msg'] == 'updated') echo "Location updated successfully!";
-        ?>
+<div class="navbar">
+    <div class="logo">Tourist Day Visit Planner</div>
+    <div class="user-info">
+        <span><?php echo $username; ?> | <?php echo $role; ?></span>
+        <form action="logout.php" method="POST" style="display:inline;">
+            <button class="logout-btn" type="submit">Logout</button>
+        </form>
     </div>
-<?php } ?>
+</div>
 
 <h2>Welcome <?php echo $username; ?></h2>
 
 <?php if ($role == 'admin') { ?>
+<div class="admin-panel">
+    <h3 style="text-align:center;">Admin Panel</h3>
 
-<!-- ================= ADMIN PANEL ================= -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="showTab('add', this)">Add</button>
+        <button class="tab-btn" onclick="showTab('update', this)">Update</button>
+        <button class="tab-btn" onclick="showTab('delete', this)">Delete</button>
+    </div>
 
-<h3>Admin Panel</h3>
+    <div id="add" class="add-card box">
+        <h3>Add New Location</h3>
+        <form action="../backend/add_location.php" method="POST" enctype="multipart/form-data">
+            <label>Location Name</label>
+            <input type="text" name="name" placeholder="Location Name" required>
+            <label>Description</label>
+            <textarea name="description" placeholder="Description" rows="3" required></textarea>
+            <label>District</label>
+            <input type="text" name="district" placeholder="District" required>
+            <label>Category</label>
+            <input type="text" name="category" placeholder="Category" required>
+            <label>Open Time</label>
+            <input type="time" name="open_time" placeholder="Open Time" required>
+            <label>Close Time</label>
+            <input type="time" name="close_time" placeholder="Close Time" required>
+            <label>Ticket Price</label>
+            <input type="number" name="ticket_price" placeholder="Ticket Price" required>
+            <label>Latitude</label>
+            <input type="text" name="latitude" placeholder="Latitude" required>
+            <label>Longitude</label>
+            <input type="text" name="longitude" placeholder="Longitude" required>
+            <label>Main Image</label>
+            <input type="file" name="image" required>
+            <label>Gallery Pictures</label>
+            <input type="file" name="images[]" multiple>
+            <button type="submit">Add Location</button>
+        </form>
+    </div>
 
-<button onclick="showTab('add')">Add</button>
-<button onclick="showTab('update')">Update</button>
-<button onclick="showTab('delete')">Delete</button>
+    <div id="update" class="box" style="display:none;">
+        <h3 style="text-align:center;">Update Locations</h3>
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <tr>
+                    <th>Name</th><th>Description</th><th>District</th><th>Category</th>
+                    <th>Open</th><th>Close</th><th>Price</th><th>Lat</th><th>Lon</th><th>Action</th>
+                </tr>
+                <?php while($row = mysqli_fetch_assoc($result)) { ?>
+                <tr>
+                    <form action="../backend/update_location.php" method="POST">
+                        <td><input name="name" value="<?php echo $row['name']; ?>"></td>
+                        <td><input name="description" value="<?php echo $row['description']; ?>"></td>
+                        <td><input name="district" value="<?php echo $row['district']; ?>"></td>
+                        <td><input name="category" value="<?php echo $row['category']; ?>"></td>
+                        <td><input type="time" name="open_time" value="<?php echo $row['open_time']; ?>"></td>
+                        <td><input type="time" name="close_time" value="<?php echo $row['close_time']; ?>"></td>
+                        <td><input name="ticket_price" value="<?php echo $row['ticket_price']; ?>"></td>
+                        <td><input name="latitude" value="<?php echo $row['latitude']; ?>"></td>
+                        <td><input name="longitude" value="<?php echo $row['longitude']; ?>"></td>
+                        <td>
+                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                            <button type="submit">Update</button>
+                        </td>
+                    </form>
+                </tr>
+                <?php } ?>
+            </table>
+        </div>
+    </div>
 
-<hr>
-
-<!-- ADD -->
-<div id="add" style="display:none;">
-    <form action="../backend/add_location.php" method="POST" enctype="multipart/form-data">
-        Name: <input type="text" name="name"><br>
-        Description: <input type="text" name="description"><br>
-        District: <input type="text" name="district"><br>
-        Category: <input type="text" name="category"><br>
-        Open Time: <input type="time" name="open_time"><br>
-        Close Time: <input type="time" name="close_time"><br>
-        Ticket Price: <input type="number" name="ticket_price"><br>
-        Latitude: <input type="text" name="latitude"><br>
-        Longitude: <input type="text" name="longitude"><br>
-         <!-- Main image -->
-        Image: <input type="file" name="image"><br>
-
-        <!-- Multiple images -->
-        Gallery Images: <input type="file" name="images[]" multiple><br>
-        <button type="submit">Add</button>
-    </form>
-</div>
-
-<!-- UPDATE -->
-<div id="update" style="display:none;">
-<table border="1">
-<tr>
-<th>Name</th><th>Description</th><th>District</th><th>Category</th>
-<th>Open</th><th>Close</th><th>Price</th><th>Lat</th><th>Lon</th><th>Action</th>
-</tr>
-
-<?php while($row = mysqli_fetch_assoc($result)) { ?>
-<tr>
-<form action="../backend/update_location.php" method="POST">
-<td><input name="name" value="<?php echo $row['name']; ?>"></td>
-<td><input name="description" value="<?php echo $row['description']; ?>"></td>
-<td><input name="district" value="<?php echo $row['district']; ?>"></td>
-<td><input name="category" value="<?php echo $row['category']; ?>"></td>
-<td><input type="time" name="open_time" value="<?php echo $row['open_time']; ?>"></td>
-<td><input type="time" name="close_time" value="<?php echo $row['close_time']; ?>"></td>
-<td><input name="ticket_price" value="<?php echo $row['ticket_price']; ?>"></td>
-<td><input name="latitude" value="<?php echo $row['latitude']; ?>"></td>
-<td><input name="longitude" value="<?php echo $row['longitude']; ?>"></td>
-<td>
-<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-<button type="submit">Update</button>
-</td>
-</form>
-</tr>
-<?php } ?>
-</table>
-</div>
-
-<!-- DELETE -->
-<div id="delete" style="display:none;">
-<table border="1">
-<tr><th>Name</th><th>Action</th></tr>
-
-<?php while($row = mysqli_fetch_assoc($result2)) { ?>
-<tr>
-<td><?php echo $row['name']; ?></td>
-<td>
-<a href="../backend/delete_location.php?id=<?php echo $row['id']; ?>">Delete</a>
-</td>
-</tr>
-<?php } ?>
-
-</table>
+    <div id="delete" class="box" style="display:none;">
+        <h3 style="text-align:center;">Delete Locations</h3>
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <tr><th>Name</th><th>Action</th></tr>
+                <?php while($row = mysqli_fetch_assoc($result2)) { ?>
+                <tr>
+                    <td><?php echo $row['name']; ?></td>
+                    <td><a href="../backend/delete_location.php?id=<?php echo $row['id']; ?>">Delete</a></td>
+                </tr>
+                <?php } ?>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script>
-function showTab(tab) {
-    document.getElementById('add').style.display = 'none';
-    document.getElementById('update').style.display = 'none';
-    document.getElementById('delete').style.display = 'none';
-    document.getElementById(tab).style.display = 'block';
+function showTab(tab,el){
+    document.getElementById('add').style.display='none';
+    document.getElementById('update').style.display='none';
+    document.getElementById('delete').style.display='none';
+
+    document.getElementById(tab).style.display='block';
+
+    document.querySelectorAll('.tab-btn').forEach(btn=>btn.classList.remove('active'));
+    el.classList.add('active');
 }
 </script>
 
 <?php } else { ?>
-
-<!-- ================= USER DASHBOARD ================= -->
-
-<h3>User Dashboard</h3>
-
-<!-- CATEGORY FILTER -->
-<form method="GET">
-    <button name="category" value="Beach">Beach</button>
-    <button name="category" value="Historical">Historical</button>
-    <button name="category" value="Wildlife">Wildlife</button>
-    <button name="category" value="Religious">Religious</button>
-    <button type="submit">All</button>
-</form>
-
-<br>
+<div class="category-bar">
+    <a href="?category=Beach">Beach</a>
+    <a href="?category=Historical">Historical</a>
+    <a href="?category=Wildlife">Wildlife</a>
+    <a href="?category=Religious">Religious</a>
+    <a href="?">All</a>
+</div>
 
 <?php
-// FILTER QUERY
 if (isset($_GET['category']) && $_GET['category'] != "") {
     $category = $_GET['category'];
     $result = mysqli_query($conn, "SELECT * FROM location WHERE category='$category'");
@@ -179,73 +466,17 @@ if (isset($_GET['category']) && $_GET['category'] != "") {
 }
 ?>
 
-<!-- LOCATION CARDS -->
-<div>
+<div class="card-container">
 <?php while($row = mysqli_fetch_assoc($result)) { ?>
     <div class="card">
         <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
-        <h3>
-            <a href="?category=<?php echo isset($_GET['category']) ? $_GET['category'] : ''; ?>&location=<?php echo $row['id']; ?>">
-                <?php echo $row['name']; ?>
-            </a>
-        </h3>
+        <h3><a href="../frontend/location_details.php?id=<?php echo $row['id']; ?>"><?php echo $row['name']; ?></a></h3>
         <p><?php echo $row['district']; ?></p>
     </div>
 <?php } ?>
 </div>
 
-<?php
-// LOCATION DETAILS
-if (isset($_GET['location'])) {
-    $id = $_GET['location'];
-    $res = mysqli_query($conn, "SELECT * FROM location WHERE id=$id");
-    $loc = mysqli_fetch_assoc($res);
-?>
-
-<hr>
-
-<h3><?php echo $loc['name']; ?></h3>
-<?php
-$imgQuery = mysqli_query($conn, "SELECT * FROM location_images WHERE location_id = $id");
-
-while($img = mysqli_fetch_assoc($imgQuery)){
-?>
-    <img src="../images/<?php echo $img['image']; ?>" width="200">
 <?php } ?>
-<p><?php echo $loc['description']; ?></p>
-<p>District: <?php echo $loc['district']; ?></p>
-<p>Category: <?php echo $loc['category']; ?></p>
-
-<button onclick="getLocation(<?php echo $loc['latitude']; ?>, <?php echo $loc['longitude']; ?>)">Show Distance</button>
-<p id="distance"></p>
-
-<a target="_blank" href="https://www.google.com/maps?q=<?php echo $loc['latitude']; ?>,<?php echo $loc['longitude']; ?>">
-    <button>Navigate</button>
-</a>
-
-<script>
-function getLocation(lat, lon) {
-    navigator.geolocation.getCurrentPosition(function(pos){
-        let d = calc(pos.coords.latitude, pos.coords.longitude, lat, lon);
-        document.getElementById("distance").innerHTML = d.toFixed(2) + " km";
-    });
-}
-
-function calc(a,b,c,d){
-    let R=6371;
-    let x=(c-a)*Math.PI/180;
-    let y=(d-b)*Math.PI/180;
-    let z=Math.sin(x/2)**2 + Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)**2;
-    return R * (2*Math.atan2(Math.sqrt(z),Math.sqrt(1-z)));
-}
-</script>
-
-<?php } ?>
-
-<?php } ?>
-
-<br><br>
-<a href="logout.php">Logout</a>
 
 </body>
 </html>
