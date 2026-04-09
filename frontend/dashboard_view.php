@@ -437,6 +437,25 @@ h2 {
     border-radius: 6px;
     cursor: pointer;
 }
+
+.alert {
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    background: #22c55e;
+    color: white;
+    font-weight: bold;
+    position: sticky;
+    top: 60px;
+    z-index: 999;
+    animation: fadeOut 4s forwards;
+}
+
+@keyframes fadeOut {
+    0% {opacity: 1;}
+    80% {opacity: 1;}
+    100% {opacity: 0; display:none;}
+}
 </style>
 </head>
 <body>
@@ -450,6 +469,19 @@ h2 {
         </form>
     </div>
 </div>
+
+<?php if (isset($_GET['msg'])) { ?>
+    <div class="alert">
+        <?php 
+        if ($_GET['msg'] == 'updated') echo "✅ Updated successfully";
+        elseif ($_GET['msg'] == 'deleted') echo "🗑 Deleted successfully";
+        elseif ($_GET['msg'] == 'error') echo "❌ Something went wrong";
+        elseif ($_GET['msg'] == 'invalid') echo "⚠ Invalid request";
+        elseif ($_GET['msg'] == 'invalidData') echo "⚠ Invalid input values";
+        elseif ($_GET['msg'] == 'AccessDenied') echo "⛔ Access Denied";
+        ?>
+    </div>
+<?php } ?>
 
 <h2>Welcome <?php echo $username; ?></h2>
 
@@ -558,7 +590,7 @@ function showTab(tab,el){
     <p>Find the best destinations in Near Moratuwa</p>
 </div>
 
-<!-- ===== CATEGORY NAVBAR (UPGRADED) ===== -->
+<!-- ===== CATEGORY NAVBAR (UPGRADED) ===== -->88
 <div class="category-bar">
     <a href="?category=Beach">🏖 Beach</a>
     <a href="?category=Historical">🏛 Historical</a>

@@ -3,23 +3,22 @@ include("db.php");
 session_start();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') {
-    echo "Access denied";
+    header("Location: ../frontend/dashboard_view.php?msg=AccessDenied");
     exit();
 }
 
-// ✅ Check if id is set
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     $sql = "DELETE FROM location WHERE id='$id'";
 
     if(mysqli_query($conn, $sql)) {
-        echo "Deleted successfully";
+        header("Location: ../frontend/dashboard_view.php?msg=deleted");
     } else {
-        echo "Error: " . mysqli_error($conn);
+        header("Location: ../frontend/dashboard_view.php?msg=error");
     }
-
 } else {
-    echo "Invalid request: ID not found";
+    header("Location: ../frontend/dashboard_view.php?msg=invalid");
 }
+exit();
 ?>
