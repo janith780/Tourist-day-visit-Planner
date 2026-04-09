@@ -333,6 +333,110 @@ h2 {
         margin: 10px;
     }
 }
+
+/* ===== HERO SECTION ===== */
+.hero {
+    height: 220px;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                url('../images/colombo 3.jpg') center/cover;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 20px 20px;
+}
+
+.hero h1 {
+    font-size: 32px;
+}
+
+.hero p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* ===== CATEGORY BAR ===== */
+.category-bar {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px;
+    flex-wrap: wrap;
+}
+
+.category-bar a {
+    padding: 10px 18px;
+    background: white;
+    border-radius: 25px;
+    text-decoration: none;
+    color: #1e293b;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.category-bar a:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* ===== CARD GRID ===== */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* ===== CARD ===== */
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.card-img img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+/* ===== OVERLAY ===== */
+.overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+    transform: translateY(100%);
+    transition: 0.4s;
+}
+
+/* SHOW OVERLAY ON HOVER */
+.card:hover .overlay {
+    transform: translateY(0);
+}
+
+/* ZOOM IMAGE */
+.card:hover img {
+    transform: scale(1.1);
+}
+
+/* BUTTON */
+.overlay button {
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: #3b82f6;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -449,12 +553,18 @@ function showTab(tab,el){
 </script>
 
 <?php } else { ?>
+<div class="hero">
+    <h1>Explore Beautiful Places 🌍</h1>
+    <p>Find the best destinations in Near Moratuwa</p>
+</div>
+
+<!-- ===== CATEGORY NAVBAR (UPGRADED) ===== -->
 <div class="category-bar">
-    <a href="?category=Beach">Beach</a>
-    <a href="?category=Historical">Historical</a>
-    <a href="?category=Wildlife">Wildlife</a>
-    <a href="?category=Religious">Religious</a>
-    <a href="?">All</a>
+    <a href="?category=Beach">🏖 Beach</a>
+    <a href="?category=Historical">🏛 Historical</a>
+    <a href="?category=Wildlife">🐘 Wildlife</a>
+    <a href="?category=Religious">🛕 Religious</a>
+    <a href="?">✨ All</a>
 </div>
 
 <?php
@@ -466,14 +576,24 @@ if (isset($_GET['category']) && $_GET['category'] != "") {
 }
 ?>
 
+<!-- ===== LOCATION CARDS (UPGRADED) ===== -->
 <div class="card-container">
+
 <?php while($row = mysqli_fetch_assoc($result)) { ?>
     <div class="card">
-        <img src="../images/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
-        <h3><a href="../frontend/location_details.php?id=<?php echo $row['id']; ?>"><?php echo $row['name']; ?></a></h3>
-        <p><?php echo $row['district']; ?></p>
+        <div class="card-img">
+            <img src="../images/<?php echo $row['image']; ?>">
+            <div class="overlay">
+                <h3><?php echo $row['name']; ?></h3>
+                <p><?php echo $row['district']; ?></p>
+                <a href="../frontend/location_details.php?id=<?php echo $row['id']; ?>">
+                    <button>View Details</button>
+                </a>
+            </div>
+        </div>
     </div>
 <?php } ?>
+
 </div>
 
 <?php } ?>
