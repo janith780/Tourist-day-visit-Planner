@@ -464,7 +464,7 @@ h2 {
     <div class="logo">Tourist Day Visit Planner</div>
     <div class="user-info">
         <span><?php echo $username; ?> | <?php echo $role; ?></span>
-        <form action="logout.php" method="POST" style="display:inline;">
+        <form action="../backend/logout.php" method="POST" style="display:inline;">
             <button class="logout-btn" type="submit">Logout</button>
         </form>
     </div>
@@ -590,7 +590,7 @@ function showTab(tab,el){
     <p>Find the best destinations in Near Moratuwa</p>
 </div>
 
-<!-- ===== CATEGORY NAVBAR (UPGRADED) ===== -->88
+<!-- ===== CATEGORY NAVBAR (UPGRADED) ===== -->
 <div class="category-bar">
     <a href="?category=Beach">🏖 Beach</a>
     <a href="?category=Historical">🏛 Historical</a>
