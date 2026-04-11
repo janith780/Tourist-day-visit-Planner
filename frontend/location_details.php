@@ -1,5 +1,6 @@
     <?php
     include("../backend/db.php");
+    include("../backend/weather_api.php");
 
     if (!isset($_GET['id'])) {
         echo "Invalid location";
@@ -10,6 +11,30 @@
 
     $res = mysqli_query($conn, "SELECT * FROM location WHERE id=$id");
     $loc = mysqli_fetch_assoc($res);
+
+    $district = $loc['district'];
+
+// Fix Sri Lanka districts
+$districtMap = [
+    "Gampaha" => "Colombo",
+    "Kalutara" => "Colombo",
+    "Matara" => "Galle",
+    "Nuwara Eliya" => "Kandy"
+];
+
+$apiCity = isset($districtMap[$district]) ? $districtMap[$district] : $district;
+
+$weather = getWeather($apiCity);
+
+$temp = "";
+$desc = "";
+$icon = "";
+
+if ($weather && isset($weather['main'])) {
+    $temp = $weather['main']['temp'];
+    $desc = $weather['weather'][0]['description'];
+    $icon = $weather['weather'][0]['icon'];
+}
     ?>
 
     <!DOCTYPE html>
@@ -252,6 +277,19 @@ button{
         <div class="info-item">
             <span>🌍 Coordinates</span>
             <p><?php echo $loc['latitude']; ?> , <?php echo $loc['longitude']; ?></p>
+        </div>
+
+        <div class="info-item">
+        <span>🌦 Weather</span>
+        <?php if ($temp != "") { ?>
+            <p>
+                <img src="https://openweathermap.org/img/wn/<?php echo $icon; ?>.png">
+                <?php echo $temp; ?> °C <br>
+                <?php echo $desc; ?>
+            </p>
+        <?php } else { ?>
+            <p>Not available</p>
+        <?php } ?>
         </div>
 
     </div>
