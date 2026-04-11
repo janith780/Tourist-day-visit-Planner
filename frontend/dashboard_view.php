@@ -36,7 +36,7 @@ if ($role == 'admin') {
 }
 
 body {
-    background: url('../images/dashboard 1.jpg') no-repeat center center fixed;
+    background: url('../images/red.jpg') no-repeat center center fixed;
     background-size: cover;
     padding: 0;
     margin: 0;
@@ -103,7 +103,7 @@ h2 {
     text-align: center;
     margin: 20px 0;
     font-size: 28px;
-    color: #1e293b;
+    color: #ffffff;
 }
 
 /* ===== CATEGORY BAR FOR USER ===== */
@@ -536,6 +536,8 @@ h2 {
                 <option value="Mountain">Mountain</option>
                 <option value="Waterfall">Waterfall</option>
                 <option value="Monument">Monument</option>
+                <option value="Museum">Museum </option>
+                <option value="Air Port">Air Port </option>
                 <option value="City">City</option>
             </select>
             <label>Open Time</label>
@@ -637,7 +639,9 @@ function showTab(tab,el){
     <a href="?category=Park">🌳 Park</a>
     <a href="?category=Mountain">⛰ Mountain</a>
     <a href="?category=Waterfall">💧 Waterfall</a>
-    <a href="?category=Monument">💧 Monument</a>
+    <a href="?category=Monument"> Monument</a>
+    <a href="?category=Museum"> Museum </a>
+    <a href="?category=Air Port"> Air Port </a>
     <a href="?">✨ All</a>
 </div>
 
