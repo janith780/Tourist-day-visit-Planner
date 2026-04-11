@@ -15,6 +15,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $category = $_POST['category'];
     $open_time = $_POST['open_time'];
     $close_time = $_POST['close_time'];
+    $always_open = isset($_POST['always_open']) ? 1 : 0;
     $ticket_price = $_POST['ticket_price'];
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
@@ -43,11 +44,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     // ===============================
     // ✅ INSERT LOCATION
     // ===============================
-    $sql = "INSERT INTO location
-    (name, description, district, category, open_time, close_time, ticket_price, latitude, longitude, image)
-    VALUES
-    ('$name','$description','$district','$category','$open_time','$close_time','$ticket_price','$latitude','$longitude','$mainImage')";
-
+   $sql = "INSERT INTO location 
+(name, description, district, category, open_time, close_time, ticket_price, latitude, longitude, image, always_open)
+VALUES 
+('$name','$description','$district','$category','$open_time','$close_time','$ticket_price','$latitude','$longitude','$mainImage','$always_open')";
     if(mysqli_query($conn, $sql)){
 
         // Get inserted location ID

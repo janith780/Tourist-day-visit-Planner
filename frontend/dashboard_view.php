@@ -36,7 +36,8 @@ if ($role == 'admin') {
 }
 
 body {
-    background: #f0f4f8;
+    background: url('../images/dashboard 1.jpg') no-repeat center center fixed;
+    background-size: cover;
     padding: 0;
     margin: 0;
 }
@@ -456,6 +457,26 @@ h2 {
     80% {opacity: 1;}
     100% {opacity: 0; display:none;}
 }
+
+.checkbox-group {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #1e293b;
+    cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;   /* IMPORTANT FIX */
+    margin: 0;
+    transform: scale(1.2);
+}
 </style>
 </head>
 <body>
@@ -505,13 +526,30 @@ h2 {
             <label>District</label>
             <input type="text" name="district" placeholder="District" required>
             <label>Category</label>
-            <input type="text" name="category" placeholder="Category" required>
+            <select name="category" required>
+                <option value="">Select Category</option>
+                <option value="Beach">Beach</option>
+                <option value="Historical">Historical</option>
+                <option value="Wildlife">Wildlife</option>
+                <option value="Religious">Religious</option>
+                <option value="Park">Park</option>
+                <option value="Mountain">Mountain</option>
+                <option value="Waterfall">Waterfall</option>
+                <option value="Monument">Monument</option>
+                <option value="City">City</option>
+            </select>
             <label>Open Time</label>
-            <input type="time" name="open_time" placeholder="Open Time" required>
+            <input type="time" name="open_time" placeholder="Open Time" >
             <label>Close Time</label>
-            <input type="time" name="close_time" placeholder="Close Time" required>
+            <input type="time" name="close_time" placeholder="Close Time" >
+            <div class="checkbox-group">
+                <label>
+                <input type="checkbox" name="always_open" value="1">
+                Always Open (24 Hours)
+                </label>
+            </div>
             <label>Ticket Price</label>
-            <input type="number" name="ticket_price" placeholder="Ticket Price" required>
+            <input type="number" name="ticket_price" placeholder="Ticket Price" >
             <label>Latitude</label>
             <input type="text" name="latitude" placeholder="Latitude" required>
             <label>Longitude</label>
@@ -596,6 +634,10 @@ function showTab(tab,el){
     <a href="?category=Historical">🏛 Historical</a>
     <a href="?category=Wildlife">🐘 Wildlife</a>
     <a href="?category=Religious">🛕 Religious</a>
+    <a href="?category=Park">🌳 Park</a>
+    <a href="?category=Mountain">⛰ Mountain</a>
+    <a href="?category=Waterfall">💧 Waterfall</a>
+    <a href="?category=Monument">💧 Monument</a>
     <a href="?">✨ All</a>
 </div>
 

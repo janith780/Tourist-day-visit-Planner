@@ -260,15 +260,17 @@ button{
         </div>
 
         <div class="info-item">
-            <span>⏰ Open Time</span>
-            <p><?php echo $loc['open_time']; ?></p>
+        <span>⏰ Opening Hours</span>
+        <p>
+        <?php 
+        if ($loc['always_open'] == 1) {
+            echo "🟢 Always Open";
+        } else {
+            echo $loc['open_time'] . " - " . $loc['close_time'];
+        }
+        ?>
+        </p>
         </div>
-
-        <div class="info-item">
-            <span>⏰ Close Time</span>
-            <p><?php echo $loc['close_time']; ?></p>
-        </div>
-
         <div class="info-item">
             <span>🎟 Ticket Price</span>
             <p>LKR <?php echo $loc['ticket_price']; ?></p>
