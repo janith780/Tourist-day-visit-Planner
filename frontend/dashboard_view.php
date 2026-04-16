@@ -552,6 +552,12 @@ h2 {
             </div>
             <label>Ticket Price</label>
             <input type="number" name="ticket_price" placeholder="Ticket Price" >
+            <div class="checkbox-group">
+            <label>
+                <input type="checkbox" name="free_entry" value="1">
+                Free Entry (No Ticket)
+            </label>
+            </div>
             <label>Latitude</label>
             <input type="text" name="latitude" placeholder="Latitude" required>
             <label>Longitude</label>
@@ -570,7 +576,7 @@ h2 {
             <table class="admin-table">
                 <tr>
                     <th>Name</th><th>Description</th><th>District</th><th>Category</th>
-                    <th>Open</th><th>Close</th><th>Price</th><th>Lat</th><th>Lon</th><th>Action</th>
+                    <th>Open</th><th>Close</th><th>Price</th><th>Free Entry</th><th>Lat</th><th>Lon</th><th>Action</th>
                 </tr>
                 <?php while($row = mysqli_fetch_assoc($result)) { ?>
                 <tr>
@@ -582,6 +588,10 @@ h2 {
                         <td><input type="time" name="open_time" value="<?php echo $row['open_time']; ?>"></td>
                         <td><input type="time" name="close_time" value="<?php echo $row['close_time']; ?>"></td>
                         <td><input name="ticket_price" value="<?php echo $row['ticket_price']; ?>"></td>
+                        <td>
+                        <input type="checkbox" name="free_entry" value="1"
+                        <?php if($row['free_entry'] == 1) echo "checked"; ?>>
+                        </td>
                         <td><input name="latitude" value="<?php echo $row['latitude']; ?>"></td>
                         <td><input name="longitude" value="<?php echo $row['longitude']; ?>"></td>
                         <td>

@@ -273,7 +273,15 @@ button{
         </div>
         <div class="info-item">
             <span>🎟 Ticket Price</span>
-            <p>LKR <?php echo $loc['ticket_price']; ?></p>
+            <p>
+            <?php 
+            if ($loc['free_entry'] == 1) {
+                echo "🟢 Free Entry";
+            } else {
+                echo "LKR " . $loc['ticket_price'];
+            }
+            ?>
+            </p>
         </div>
 
         <div class="info-item">

@@ -17,8 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $open_time  = $_POST['open_time'];
     $close_time = $_POST['close_time'];
     $ticket_price = $_POST['ticket_price'];
+    $free_entry = isset($_POST['free_entry']) ? 1 : 0;
     $latitude = $_POST['latitude'];
     $longitude = $_POST['longitude'];
+    
 
     if(!is_numeric($ticket_price) || !is_numeric($latitude) || !is_numeric($longitude)){
         header("Location: ../frontend/dashboard_view.php?msg=invalidData");
@@ -33,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         open_time = '$open_time',
         close_time = '$close_time',
         ticket_price = '$ticket_price',
+        free_entry = '$free_entry',
         latitude = '$latitude',
         longitude = '$longitude'
         WHERE id = '$id'";
