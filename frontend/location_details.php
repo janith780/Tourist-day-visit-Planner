@@ -1,4 +1,5 @@
-    <?php
+ <?php
+    session_start();
     include("../backend/db.php");
     include("../backend/weather_api.php");
 
@@ -305,6 +306,44 @@ button{
     </div>
 
 </div>
+
+<?php if (isset($_SESSION['name'])) { ?>
+<div style="margin-top:30px;">
+    <h3>✍️ Write a Review</h3>
+
+    <form action="../backend/add_review.php" method="POST">
+        <input type="hidden" name="location_id" value="<?php echo $id; ?>">
+
+        <textarea name="review" required placeholder="Write your review..."
+        style="width:100%;padding:10px;"></textarea>
+
+        <br><br>
+        <button type="submit">Submit Review</button>
+    </form>
+</div>
+<?php } ?>
+
+<h3 style="margin-top:30px;">💬 Reviews</h3>
+
+<?php
+$reviews = mysqli_query($conn, "SELECT * FROM reviews WHERE location_id=$id ORDER BY id DESC");
+
+while($r = mysqli_fetch_assoc($reviews)) {
+?>
+<div style="background:#f1f5f9;padding:10px;margin:10px 0;border-radius:8px;">
+    
+    <strong><?php echo $r['username']; ?></strong><br>
+    
+    <p><?php echo $r['review']; ?></p>
+
+    <?php if (isset($_SESSION['name']) && $_SESSION['name'] == $r['username']) { ?>
+        <a href="../backend/delete_review.php?id=<?php echo $r['id']; ?>&loc=<?php echo $id; ?>">
+            <button style="background:red;color:white;">Delete</button>
+        </a>
+    <?php } ?>
+
+</div>
+<?php } ?>
 
 <!-- ===== BUTTON GROUP (NEW) ===== -->
 <div class="actions">
