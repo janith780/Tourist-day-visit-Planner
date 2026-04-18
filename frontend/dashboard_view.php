@@ -24,6 +24,7 @@ if ($role == 'admin') {
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard</title>
 
 <style>
@@ -239,6 +240,9 @@ h2 {
 .admin-table-container { /* NEW: Wrap tables to center */
     overflow-x: auto;
 }
+.admin-table input{
+    width: 120px;
+}
 
 .admin-table {
     width: 100%;
@@ -339,7 +343,7 @@ h2 {
 .hero {
     height: 220px;
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-                url('../images/colombo 3.jpg') center/cover;
+                url('') center/cover;
     color: white;
     display: flex;
     flex-direction: column;
@@ -355,6 +359,29 @@ h2 {
 .hero p {
     font-size: 16px;
     opacity: 0.9;
+}
+
+.plan-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px;
+}
+
+.plan-links a {
+    background: #3b82f6;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.plan-links a:hover {
+    background: #2563eb;
+    transform: translateY(-3px);
 }
 
 /* ===== CATEGORY BAR ===== */
@@ -476,6 +503,26 @@ h2 {
     width: auto;   /* IMPORTANT FIX */
     margin: 0;
     transform: scale(1.2);
+}
+
+@media (max-width:768px){
+    .navbar{
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .navbar .user-info{
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    h2{
+        font-size: 20px;
+    }
+      .card-img img{
+        height: 180px;
+    }
 }
 </style>
 </head>
@@ -638,7 +685,13 @@ function showTab(tab,el){
 <div class="hero">
     <h1>Explore Beautiful Places 🌍</h1>
     <p>Find the best destinations in Near Moratuwa</p>
+    <div class="plan-links">
+    <a href="../frontend/create_plan.php">➕ Create Plan</a>
+    <a href="../frontend/view_plans.php">📋 View Plans</a>
 </div>
+</div>
+
+>
 
 <!-- ===== CATEGORY NAVBAR (UPGRADED) ===== -->
 <div class="category-bar">

@@ -42,11 +42,13 @@ if ($weather && isset($weather['main'])) {
     <html>
     <head>
     <title>Location Details</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
     body{
     font-family:'Segoe UI', sans-serif;
-    background: linear-gradient(to right, #e0f2fe, #f8fafc);
+    background:  #e0f2fe;
     margin:0;
     padding:0;
 }
