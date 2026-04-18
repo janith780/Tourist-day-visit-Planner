@@ -30,7 +30,7 @@ $locations = mysqli_query($conn, "SELECT * FROM location");
     <style>
         body {
     font-family: Arial;
-    background: #f4f6f9;
+    background:  #e0f2fe;
     margin: 0;
 }
 
