@@ -1,5 +1,9 @@
 <?php
+//  (start session + get user)
+session_start();
 include("../backend/db.php");
+
+$user_id = $_SESSION['user_id']; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -7,8 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $visit_date = $_POST['visit_date'];
     $places = $_POST['places'];
 
+ 
     mysqli_query($conn, "INSERT INTO day_plans (user_id, plan_name, visit_date)
-                         VALUES (1, '$plan_name', '$visit_date')");
+                         VALUES ('$user_id', '$plan_name', '$visit_date')");
 
     $plan_id = mysqli_insert_id($conn);
 

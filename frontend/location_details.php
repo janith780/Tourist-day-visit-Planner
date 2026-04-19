@@ -53,7 +53,7 @@ if ($weather && isset($weather['main'])) {
     padding:0;
 }
 
-/* ===== DETAILS BLOCK ===== */
+/*DETAILS BLOCK*/
 .details {
     margin-top: 20px;
 }
@@ -103,7 +103,7 @@ if ($weather && isset($weather['main'])) {
     color: #1e293b;
 }
 
-/* ===== NAVBAR (NEW) ===== */
+/*NAVBAR (NEW)*/
 .topbar{
     background:#1e293b;
     color:white;
@@ -115,7 +115,7 @@ if ($weather && isset($weather['main'])) {
     align-items:center;
 }
 
-/* ===== MAIN CONTAINER ===== */
+/*MAIN CONTAINER*/
 .container{
     max-width:1100px;
     margin:30px auto;
@@ -126,14 +126,14 @@ if ($weather && isset($weather['main'])) {
     animation:fadeIn 0.6s ease;
 }
 
-/* ===== TITLE ===== */
+/*TITLE*/
 .container h2{
     font-size:28px;
     margin-bottom:15px;
     color:#1e293b;
 }
 
-/* ===== IMAGE GALLERY ===== */
+/*IMAGE GALLERY*/
 .gallery{
     display:flex;
     flex-wrap:wrap;
@@ -150,13 +150,13 @@ if ($weather && isset($weather['main'])) {
     cursor:pointer;
 }
 
-/* IMAGE HOVER EFFECT */
+/*IMAGE HOVER EFFECT*/
 .gallery img:hover{
     transform:scale(1.05);
     box-shadow:0 8px 20px rgba(0,0,0,0.2);
 }
 
-/* ===== DETAILS TEXT ===== */
+/*DETAILS TEXT*/
 .details{
     margin-top:10px;
 }
@@ -167,7 +167,7 @@ if ($weather && isset($weather['main'])) {
     color:#334155;
 }
 
-/* ===== BUTTON GROUP ===== */
+/* BUTTON GROUP */
 .actions{
     margin-top:20px;
     display:flex;
@@ -175,7 +175,7 @@ if ($weather && isset($weather['main'])) {
     flex-wrap:wrap;
 }
 
-/* ===== BUTTON STYLE ===== */
+/*BUTTON STYLE */
 button{
     padding:10px 16px;
     border:none;
@@ -216,17 +216,41 @@ button{
     background:#b91c1c;
 }
 
-/* ===== DISTANCE TEXT ===== */
+/*DISTANCE TEXT */
 #distance{
     margin-top:10px;
     font-weight:bold;
     color:#0f172a;
 }
 
-/* ===== ANIMATION ===== */
+/*ANIMATION*/
 @keyframes fadeIn{
     from{opacity:0; transform:translateY(10px);}
     to{opacity:1; transform:translateY(0);}
+}
+
+@media (max-width:768px){
+    .container{
+        margin:10px;
+        padding:15px;
+    }
+
+    .gallery img{
+        width:100%;
+        height:160px;
+    }
+
+    .info-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .actions{
+        flex-direction: column;
+    }
+
+    button{
+        width:100%;
+    }
 }
     </style>
     </head>
@@ -347,7 +371,7 @@ while($r = mysqli_fetch_assoc($reviews)) {
 </div>
 <?php } ?>
 
-<!-- ===== BUTTON GROUP (NEW) ===== -->
+<!--BUTTON GROUP (NEW)-->
 <div class="actions">
 
     <button class="btn-primary"

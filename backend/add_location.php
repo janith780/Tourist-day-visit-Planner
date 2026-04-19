@@ -22,14 +22,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $longitude = $_POST['longitude'];
     
 
-    // ✅ Fix empty values
+    //Fix empty values
     if ($latitude == '') $latitude = 0;
     if ($longitude == '') $longitude = 0;
     if ($ticket_price == '') $ticket_price = 0;
 
-    // ===============================
-    // ✅ MAIN IMAGE (for dashboard)
-    // ===============================
+    
+    //MAIN IMAGE (for dashboard)
+    
     $mainImage = '';
 
     if(isset($_FILES['image']) && $_FILES['image']['error'] == 0){
@@ -43,21 +43,21 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         }
     }
 
-    // ===============================
-    // ✅ INSERT LOCATION
-    // ===============================
+    
+    //INSERT LOCATION
+    
    $sql = "INSERT INTO location 
 (name, description, district, category, open_time, close_time, ticket_price, latitude, longitude, image, always_open, free_entry)
 VALUES 
 ('$name','$description','$district','$category','$open_time','$close_time','$ticket_price','$latitude','$longitude','$mainImage','$always_open','$free_entry')";
     if(mysqli_query($conn, $sql)){
 
-        // Get inserted location ID
+        //Get inserted location ID
         $location_id = mysqli_insert_id($conn);
 
-        // ===============================
-        // ✅ MULTIPLE IMAGES (gallery)
-        // ===============================
+        
+        //MULTIPLE IMAGES (gallery)
+        
         if(isset($_FILES['images'])){
             $total = count($_FILES['images']['name']);
 

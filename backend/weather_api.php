@@ -1,7 +1,7 @@
 <?php
 function getWeather($city)
 {
-    $apiKey = "325ca8a600fec538401e01cfd1e792b1"; // 🔴 PUT YOUR API KEY
+    $apiKey = "325ca8a600fec538401e01cfd1e792b1"; //API KEY
 
     $url = "https://api.openweathermap.org/data/2.5/weather?q=" 
         . urlencode($city) 

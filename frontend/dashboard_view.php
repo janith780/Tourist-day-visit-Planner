@@ -53,8 +53,6 @@ form label {
     letter-spacing: 0.3px;
 }
 
-
-/* ===== TOP NAVBAR ===== */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -99,7 +97,6 @@ form label {
     background: #b91c1c;
 }
 
-/* ===== DASHBOARD TITLE ===== */
 h2 {
     text-align: center;
     margin: 20px 0;
@@ -107,7 +104,6 @@ h2 {
     color: #ffffff;
 }
 
-/* ===== CATEGORY BAR FOR USER ===== */
 .category-bar {
     display: flex;
     gap: 10px;
@@ -133,7 +129,6 @@ h2 {
     transform: translateY(-3px);
 }
 
-/* ===== CARDS FOR USER ===== */
 .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -182,7 +177,6 @@ h2 {
     color: #334155;
 }
 
-/* ===== ADMIN PANEL STYLING ===== */
 .admin-panel {
     display: flex;
     flex-direction: column;
@@ -191,7 +185,6 @@ h2 {
     max-width: 1200px;
 }
 
-/* ADD FORM CARD */
 .add-card {
     background: #ffffff;
     padding: 20px;
@@ -236,8 +229,7 @@ h2 {
     background: #2563eb;
 }
 
-/* ADMIN TABLE STYLING */
-.admin-table-container { /* NEW: Wrap tables to center */
+.admin-table-container { 
     overflow-x: auto;
 }
 .admin-table input{
@@ -251,7 +243,7 @@ h2 {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    margin: 0 auto; /* CENTER TABLE */
+    margin: 0 auto; 
 }
 
 .admin-table th, .admin-table td {
@@ -300,7 +292,6 @@ h2 {
     color: #b91c1c;
 }
 
-/* ===== TABS ===== */
 .nav-tabs {
     display: flex;
     justify-content: center;
@@ -324,7 +315,6 @@ h2 {
     color: white;
 }
 
-/* RESPONSIVE */
 @media(max-width:768px){
     .card-container {
         flex-direction: column;
@@ -339,7 +329,6 @@ h2 {
     }
 }
 
-/* ===== HERO SECTION ===== */
 .hero {
     height: 220px;
     background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
@@ -384,7 +373,6 @@ h2 {
     transform: translateY(-3px);
 }
 
-/* ===== CATEGORY BAR ===== */
 .category-bar {
     display: flex;
     justify-content: center;
@@ -410,7 +398,6 @@ h2 {
     transform: translateY(-3px);
 }
 
-/* ===== CARD GRID ===== */
 .card-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -418,7 +405,6 @@ h2 {
     padding: 20px;
 }
 
-/* ===== CARD ===== */
 .card {
     border-radius: 15px;
     overflow: hidden;
@@ -433,7 +419,6 @@ h2 {
     transition: 0.5s;
 }
 
-/* ===== OVERLAY ===== */
 .overlay {
     position: absolute;
     bottom: 0;
@@ -445,17 +430,14 @@ h2 {
     transition: 0.4s;
 }
 
-/* SHOW OVERLAY ON HOVER */
 .card:hover .overlay {
     transform: translateY(0);
 }
 
-/* ZOOM IMAGE */
 .card:hover img {
     transform: scale(1.1);
 }
 
-/* BUTTON */
 .overlay button {
     margin-top: 8px;
     padding: 6px 12px;
@@ -500,7 +482,7 @@ h2 {
 }
 
 .checkbox-group input[type="checkbox"] {
-    width: auto;   /* IMPORTANT FIX */
+    width: auto;   
     margin: 0;
     transform: scale(1.2);
 }
@@ -693,7 +675,6 @@ function showTab(tab,el){
 
 >
 
-<!-- ===== CATEGORY NAVBAR (UPGRADED) ===== -->
 <div class="category-bar">
     <a href="?category=Beach">🏖 Beach</a>
     <a href="?category=Historical">🏛 Historical</a>
@@ -717,7 +698,6 @@ if (isset($_GET['category']) && $_GET['category'] != "") {
 }
 ?>
 
-<!-- ===== LOCATION CARDS (UPGRADED) ===== -->
 <div class="card-container">
 
 <?php while($row = mysqli_fetch_assoc($result)) { ?>

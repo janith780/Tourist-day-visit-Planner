@@ -12,7 +12,7 @@ if (isset($_POST['register'])){
     $result = mysqli_query($conn, $check);
 
     if(mysqli_num_rows($result) > 0){
-        //  email exists
+        // email exists
         header("Location: ../frontend/register.html?error=1");
         exit();
     } else {
@@ -21,7 +21,7 @@ if (isset($_POST['register'])){
                 VALUES ('$name', '$email', '$password', 'user')";
 
         if(mysqli_query($conn, $sql)) {
-            //  success
+            // success
             header("Location: ../frontend/register.html?success=1");
             exit();
         } else {

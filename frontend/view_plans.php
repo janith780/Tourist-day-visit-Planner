@@ -1,7 +1,15 @@
 <?php
+// 🔥 NEW CODE (session + filter user)
+session_start();
 include("../backend/db.php");
 
-$result = mysqli_query($conn, "SELECT * FROM day_plans ORDER BY id DESC");
+$user_id = $_SESSION['user_id']; // 🔥 NEW CODE
+
+// ❌ OLD: SELECT * FROM day_plans
+// 🔥 NEW CODE
+$result = mysqli_query($conn, "SELECT * FROM day_plans 
+                              WHERE user_id = '$user_id'
+                              ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>

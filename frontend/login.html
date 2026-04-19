@@ -35,7 +35,7 @@ body::before {
 }
 
 .card {
-    position: relative; /* ✅ NEW */
+    position: relative; 
     z-index: 1;
     width: 350px;
     padding: 40px;
@@ -127,6 +127,13 @@ button:hover {
     padding: 8px 16px;
     border-radius: 20px;
     backdrop-filter: blur(8px);
+}
+
+@media (max-width:768px){
+    .card{
+        width:90%;
+        padding:25px;
+    }
 }
 
 

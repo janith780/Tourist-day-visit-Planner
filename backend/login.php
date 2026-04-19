@@ -11,10 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = mysqli_query($conn, $sql);
     $user = mysqli_fetch_assoc($result);
 
-    //  FIXED condition
+    // FIXED condition
     if ($user && password_verify($password, $user['password'])) {
 
         $_SESSION['name'] = $user['name'];
+        $_SESSION['user_id'] = $user['id'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
 
