@@ -524,6 +524,7 @@ h2 {
     <div class="alert">
         <?php 
         if ($_GET['msg'] == 'updated') echo "✅ Updated successfully";
+        elseif ($_GET['msg'] == 'added') echo "✅ Added successfully";
         elseif ($_GET['msg'] == 'deleted') echo "🗑 Deleted successfully";
         elseif ($_GET['msg'] == 'error') echo "❌ Something went wrong";
         elseif ($_GET['msg'] == 'invalid') echo "⚠ Invalid request";
